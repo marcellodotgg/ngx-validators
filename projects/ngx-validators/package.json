@@ -1,6 +1,7 @@
 {
   "name": "@marcellodotgg/ngx-validators",
   "version": "0.0.1",
+  "private": false,
   "peerDependencies": {
     "@angular/common": "^19.1.0",
     "@angular/core": "^19.1.0"

@@ -38,11 +38,7 @@ export class Validators extends CoreValidators {
      */
     static requiredIfPresent(controlName: string): ValidatorFn {
        return (control: AbstractControl): ValidationErrors | null => {
-           const parent = control.parent;
-
-           if (!parent) return null;
-
-           const otherControl = parent.get(controlName);
+           const otherControl = control.parent?.get(controlName);
 
            if (!otherControl || !otherControl.value) return null;
            return control.value ? null : { requiredIfPresent: controlName, required: true }
@@ -54,18 +50,14 @@ export class Validators extends CoreValidators {
      *
      * @param controlName the control name to check for a specific value.
      * @param value the value to check against.
-     * @returns null if not required, { requiredWhen: controlName, required: true } otherwise.
+     * @returns null if not required, { requiredIfEqualTo: controlName, required: true } otherwise.
      */
-    static requiredWhen(controlName: string, value: unknown): ValidatorFn {
+    static requiredIfEqualTo(controlName: string, value: unknown): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-            const parent = control.parent;
+            const otherControl = control.parent?.get(controlName);
 
-            if (!parent) return null;
-
-            const otherControl = parent.get(controlName);
-
-            if (!otherControl || !otherControl.value) return null;
-            return otherControl.value !== value ? null : { requiredWhen: controlName, required: true };
+            if (!otherControl) return null;
+            return otherControl.value !== value ? null : { requiredIfEqualTo: controlName, required: true };
         }
     }
 }

@@ -10,7 +10,7 @@ node_modules
 *.log
 node_modules/
 modules/ssr-benchmarks/node_modules/
-
+**/coverage/**
 # Include when developing application packages.
 pubspec.lock
 .c9

@@ -17,3 +17,8 @@ class MyComponent {
 }
 ```
 
+## Versioning
+todo 
+
+## Contributing
+todo

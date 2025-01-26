@@ -17,6 +17,9 @@ class MyComponent {
 }
 ```
 
+## API
+todo -- include examples in app.
+
 ## Versioning
 We will be following support for each major Angular release. Our minor and patch versions may not align.
 
@@ -31,6 +34,6 @@ For all updates to this library, we will only be adding them to the latest versi
 
 
 ## Contributing
-Pull Requests are welcome. We require passing tests and descriptions should be filled out.
+Pull Requests are welcome. We require passing tests and descriptions should be filled out. In addition, update any documentation if needed.
 
 PRs may be closed for any reason.

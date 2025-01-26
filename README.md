@@ -31,4 +31,6 @@ For all updates to this library, we will only be adding them to the latest versi
 
 
 ## Contributing
-todo
+Pull Requests are welcome. We require passing tests and descriptions should be filled out.
+
+PRs may be closed for any reason.

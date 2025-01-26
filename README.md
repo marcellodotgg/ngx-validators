@@ -21,7 +21,7 @@ class MyComponent {
 We will be following support for each major Angular release. Our minor and patch versions may not align.
 
 |Angular|ngx-validators|latest
-|---|---|
+|---|---|---|
 |16.x.x |16.y.y|no|
 |17.x.x| 17.y.y|no|
 |18.x.x|18.y.y|no|

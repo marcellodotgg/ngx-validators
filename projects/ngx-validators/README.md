@@ -1,63 +1,19 @@
-# NgxValidators
+# ngx-validators ✅️
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.0.
+An extension of the Validators provided by the @angular team. Angular provides great out-of-the-box Validators for forms. However, they don't have validators when you need to depend on other FormControls. We extend the Validators provided by Angular and give more useful ones, particularly with cross-control functionality.
 
-## Code scaffolding
+## Sample Usage
+```ts
+import { Validators } from "@marcellodotgg/ngx-validators";
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+class MyComponent {
+  // first name is always required
+  // start and end date is optional, unless you enter a start date or end date.
+  form = new FormGroup({
+    firstName: new FormControl("", Validators.required),
+    startDate: new FormControl("", Validators.requiredIfTruthy("endDate")),
+    endDate: new FormControl("", Validators.requiredIfTruthy("startDate")),
+  });
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the library, run:
-
-```bash
-ng build ngx-validators
-```
-
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/ngx-validators
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

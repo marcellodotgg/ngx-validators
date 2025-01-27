@@ -21,8 +21,9 @@ class MyComponent {
 
 ## API
 * requiredIf
-* requiredIfAnyTruthy
-* requiredIfAllTruthy
+* requiredIfAny
+* requiredIfAll
+* requiredIfEqual(...[control Name, value])
 * lessThan(includeNullOrEmpty)
 * lessThanOrEqualTo(includeNullOrEmpty)
 * greaterThan(includeNullOrEmpty)

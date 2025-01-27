@@ -20,7 +20,13 @@ class MyComponent {
 ```
 
 ## API
-todo -- include examples in app.
+* requiredIf
+* requiredIfAnyTruthy
+* requiredIfAllTruthy
+* lessThan(includeNullOrEmpty)
+* lessThanOrEqualTo(includeNullOrEmpty)
+* greaterThan(includeNullOrEmpty)
+* greaterThanOrEqualTo(includeNullOrEmpty)
 
 ## Versioning
 We will be following support for each major Angular release. Our minor and patch versions may not align.

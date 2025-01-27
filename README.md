@@ -2,6 +2,8 @@
 
 An extension of the Validators provided by the @angular team. Angular provides great out-of-the-box Validators for forms. However, they don't have validators when you need to depend on other FormControls. We extend the Validators provided by Angular and give more useful ones, particularly with cross-control functionality.
 
+While this is on NPM and available to install as a dependency, I encourage you to copy the file and move into your code base to avoid a dependency.
+
 ## Sample Usage
 ```ts
 import { Validators } from "@marcellodotgg/ngx-validators";

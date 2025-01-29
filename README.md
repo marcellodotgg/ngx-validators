@@ -23,11 +23,12 @@ class MyComponent {
 * requiredIf
 * requiredIfAny
 * requiredIfAll
-* requiredIfEqual(...[control Name, value])
+* requiredIfAnyEqual(...[controlName, value])
+* requiredIfAllEqual(...[controlName, value])
 * lessThan(includeNullOrEmpty)
-* lessThanOrEqualTo(includeNullOrEmpty)
+* lessThanOrEqual(includeNullOrEmpty)
 * greaterThan(includeNullOrEmpty)
-* greaterThanOrEqualTo(includeNullOrEmpty)
+* greaterThanOrEqual(includeNullOrEmpty)
 
 ## Versioning
 We will be following support for each major Angular release. Our minor and patch versions may not align.

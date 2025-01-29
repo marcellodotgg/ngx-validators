@@ -9,6 +9,7 @@
     "test": "ng test --coverage",
     "test:watch": "ng test --watch --coverage"
   },
+  "license": "MIT",
   "private": false,
   "dependencies": {
     "@angular/animations": "^19.1.0",

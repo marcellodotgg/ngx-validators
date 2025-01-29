@@ -1,5 +1,9 @@
 {
   "name": "@marcellodotgg/ngx-validators",
+  "description": "A series of Angular Form Validators to help speed up common validation scenarios by extending the ones provided by the Angular team.",
+  "keywords": [
+    "angular", "validator", "validations", "validate", "reactive-forms", "angular-forms"
+  ],
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -11,6 +15,14 @@
   },
   "license": "MIT",
   "private": false,
+  "repository": {
+    "url": "https://github.com/marcellodotgg/ngx-validators",
+    "type": "git"
+  },
+  "author": {
+    "name": "Marcello",
+    "email": "hey@marcello.gg",
+  },
   "dependencies": {
     "@angular/animations": "^19.1.0",
     "@angular/common": "^19.1.0",

@@ -12,52 +12,67 @@ import {AbstractControl, ValidationErrors, ValidatorFn, Validators as CoreValida
  * ```ts
  * // Requires firstName, only if lastName is provided.
  * new FormGroup({
- *   firstName: new FormControl('', Validators.requiredIfPresent('lastName'));
+ *   firstName: new FormControl('', Validators.requiredIfAny('lastName'));
  *   lastName: new FormControl('');
  * });
  * ```
  */
 export class Validators extends CoreValidators {
-    /**
-     * Requires the current control if the given condition is true.
-     *
-     * @param condition the condition to check against.
-     * @returns null if the condition is false, { requiredIf: true, required: true } otherwise.
-     */
     static requiredIf(condition: boolean): ValidatorFn {
         return (_: AbstractControl): ValidationErrors | null => {
             return condition ? { requiredIf: true, required: true } : null;
         }
     }
 
-    /**
-     * Requires the current control if the given control name has a truthy value.
-     *
-     * @param controlName the control name to check for a truthy value.
-     * @returns null if not required, { requiredIfPresent: controlName, required: true } otherwise.
-     */
-    static requiredIfPresent(controlName: string): ValidatorFn {
+    // Checks if any control has a truthy value
+    static requiredIfAny(...controlNames: string[]): ValidatorFn {
        return (control: AbstractControl): ValidationErrors | null => {
-           const otherControl = control.parent?.get(controlName);
+           if (!control.parent) return null;
 
-           if (!otherControl || !otherControl.value) return null;
-           return control.value ? null : { requiredIfPresent: controlName, required: true }
+           const controlHasValue = (controlName: string) => !!control.parent.get(controlName)?.value;
+           const isValid = controlNames.some(controlHasValue)
+
+           if (isValid) return null;
+           return { requiredIfAny: controlNames.filter(controlHasValue), required: true };
        }
     }
 
-    /**
-     * Requires the current control if the given control name matches a specific value.
-     *
-     * @param controlName the control name to check for a specific value.
-     * @param value the value to check against.
-     * @returns null if not required, { requiredIfEqualTo: controlName, required: true } otherwise.
-     */
-    static requiredIfEqualTo(controlName: string, value: unknown): ValidatorFn {
+    // Checks if all controls have a truthy value
+    static requiredIfAll(...controlNames: string[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-            const otherControl = control.parent?.get(controlName);
+            if (!control.parent) return null;
 
-            if (!otherControl) return null;
-            return otherControl.value !== value ? null : { requiredIfEqualTo: controlName, required: true };
+            const isValid = controlNames.every(controlName => !!control.parent.get(controlName)?.value);
+
+            if (isValid) return null;
+            return { requiredIfAll: controlNames, required: true };
+        }
+    }
+
+    static requiredIfAnyEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            if (!control.parent) return null;
+
+            const pairMatch = (pair: ControlValuePair) => control.parent.get(pair[0])?.value === pair[1];
+            const isValid = controlValuePairs.some(pairMatch);
+
+            if (isValid) return null;
+            return { requiredIfAnyEqual: controlValuePairs.filter(pairMatch), required: true };
+        }
+    }
+
+
+    static requiredIfAllEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            if (!control.parent) return null;
+
+            const isValid = controlValuePairs.every(pair => control.parent.get(pair[0])?.value === pair[1]);
+
+            if (isValid) return null;
+            return { requiredIfAllEqual: true, required: true };
         }
     }
 }
+
+type ControlValuePair = [controlName: string, value: any];
+

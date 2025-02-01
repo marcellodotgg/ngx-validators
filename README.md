@@ -20,27 +20,15 @@ class MyComponent {
 ```
 
 ## API
-* requiredIf(condition: string)
-* requiredIfAny(...controlNames: string[])
-* requiredIfAll(...controlNames: string[])
-* requiredIfAnyEqual(...controlPairs: [controlName, value][])
-* requiredIfAllEqual(...controlPairs: [controlName, value][])
-* lt(controlName: string, opts = { includeFalsy: false })
-* lte(controlName: string, opts = { includeFalsy: false })
-* gt(controlName: string, opts = { includeFalsy: false })
-* gte(controlName: string, opts = { includeFalsy: false })
-
-## Versioning
-We will be following support for each major Angular release. Our minor and patch versions may not align.
-
-|Angular|ngx-validators|latest
-|---|---|---|
-|16.x.x |16.y.y|no|
-|17.x.x| 17.y.y|no|
-|18.x.x|18.y.y|no|
-|19.x.x|19.y.y|yes|
-
-For all updates to this library, we will only be adding them to the latest version. Therefore, new features will only be available to the latest version of `ngx-validators`.
+* `requiredIf(condition: string)`
+* `requiredIfAny(...controlNames: string[])`
+* `requiredIfAll(...controlNames: string[])`
+* `requiredIfAnyEqual(...controlPairs: [controlName, value][])`
+* `requiredIfAllEqual(...controlPairs: [controlName, value][])`
+* `lt(controlName: string, opts = { includeFalsy: false })`
+* `lte(controlName: string, opts = { includeFalsy: false })`
+* `gt(controlName: string, opts = { includeFalsy: false })`
+* `gte(controlName: string, opts = { includeFalsy: false })`
 
 ## Contributing
 Pull Requests are welcome. We require passing tests and descriptions should be filled out. In addition, update any documentation if needed.

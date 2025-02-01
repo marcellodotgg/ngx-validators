@@ -29,6 +29,11 @@ jobs:
       - name: Run build
         run: npm run build:pages
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "marcellodotgg"
+          git config --global user.email "hey@marcello.gg"
+
       - name: Run Deploy
         run: npm run deploy
         env:

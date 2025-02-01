@@ -1,25 +1,41 @@
+<div class="container">
 <h1>Sample Form</h1>
 <form [formGroup]="form">
     <label for="first_name">First Name</label>
     <input formControlName="firstName" id="first_name" name="first name" type="text" />
     <label for="last_name">Last Name</label>
     <input formControlName="lastName" id="last_name" name="last name" type="text"/>
-    <label for="can_provide_email">Provide Email?</label>
-    <input formControlName="canProvideEmail" id="can_provide_email" type="checkbox" [checked]="false" />
+    <label for="can_provide_email" class="custom-checkbox">
+        Provide Email?
+        <input formControlName="canProvideEmail" id="can_provide_email" type="checkbox" [checked]="false" />
+        <span class="checkmark"></span>
+    </label>
+
     @if (form.get('canProvideEmail')?.value) {
+        <div class="group">
         <label for="email">Email Address</label>
-        <input formControlName="email" id="email" type="email" />
+        <input formControlName="email" id="email" type="email" autocomplete="off" />
+        @if (form.get('email')?.errors) {
+            <div class="error-msg">{{ form.get('email')?.errors | json }}</div>
+        }
+        </div>
     }
     <label for="gender">Gender</label>
     <select id="gender" formControlName="gender">
+        <option disabled value="">Select an option</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
         <option value="other">Other</option>
     </select>
     @if (form.get('gender')?.value === "other") {
+        <div class="group">
        <label for="gender_other">Enter your gender</label>
        <input id="gender_other" formControlName="genderOther" type="text"/>
+        @if (form.get('genderOther')?.errors) {
+            <div class="error-msg">{{ form.get('genderOther')?.errors | json }}</div>
+        }
+        </div>
     }
     <input type="submit" [disabled]="form.invalid" value="Submit">
 </form>
-{{ form.value | json}}
+</div>

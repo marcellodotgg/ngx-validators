@@ -174,7 +174,7 @@ describe('Validators', () => {
             vi.advanceTimersByTime(1);
 
             expect(form.get('firstName')?.errors).toEqual({
-                requiredIfAllEqual: true,
+                requiredIfAllEqual: [['lastName', 'baz'], ['middleName', 'bar']],
                 required: true
             });
         });

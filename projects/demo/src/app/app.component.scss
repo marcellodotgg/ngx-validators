@@ -7,6 +7,11 @@ form {
     margin-top: 8px;
   }
 
+  div.group {
+    display: flex;
+    flex-direction: column;
+  }
+
   input[type=submit] {
     margin-top: 16px;
   }

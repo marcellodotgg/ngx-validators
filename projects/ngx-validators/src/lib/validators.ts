@@ -86,7 +86,7 @@ export class Validators extends CoreValidators {
             const isRequired = controlValuePairs.every(pair => control.parent?.get(pair[0])?.value === pair[1]);
 
             if (isRequired && control.value || !isRequired) return null;
-            return { requiredIfAllEqual: true, required: true };
+            return { requiredIfAllEqual: controlValuePairs, required: true };
         }
     }
 }

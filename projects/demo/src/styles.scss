@@ -1,1 +1,118 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: #f1f1f1;
+  background: #000;
+  font-size: 1.1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  padding: 0 16px;
+}
+
+form {
+  input, select {
+    border-radius: 10px;
+    font-size: 1.1rem;
+  }
+
+  input {
+    background: #222;
+    border: 1px solid #555;
+    padding: 8px;
+    color: white;
+
+    &:focus {
+      outline: none;
+      border: 1px solid #aaa;
+    }
+  }
+
+  input[type=submit] {
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+      background: #222;
+      border: inherit;
+
+      &:hover {
+        background: #222;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: #003388;
+    }
+
+    background: #004fc9;
+    border: 1px solid #00000022
+  }
+
+  select {
+    appearance: none;
+    border: 1px solid #555;
+    color: white;
+
+    /* Add an arrow indicator */
+    background: #222 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M7 10l5 5 5-5H7z"/></svg>') no-repeat right 10px center;
+    background-size: 16px;
+    padding: 8px 30px 8px 8px;
+  }
+
+  label:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    gap: 8px;
+
+    input[type=checkbox] {
+      display: none;
+    }
+
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #555;
+      border-radius: 4px;
+      display: inline-block;
+      position: relative;
+      margin-right: 10px;
+    }
+
+
+    input:checked + .checkmark {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    input:checked + .checkmark::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  div:has(.error-msg) {
+    input {
+      border: 1px solid #c86b6b;
+    }
+  }
+
+}

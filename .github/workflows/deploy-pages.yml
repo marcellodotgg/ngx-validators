@@ -11,6 +11,8 @@ on:
 jobs:
   deploy_to_gh_pages:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout code

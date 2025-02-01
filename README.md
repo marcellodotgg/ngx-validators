@@ -4,6 +4,11 @@ An extension of the Validators provided by the @angular team. Angular provides g
 
 While this is on NPM and available to install as a dependency, I encourage you to copy the file and move into your code base to avoid a dependency.
 
+## Installing
+```sh
+npm i @marcellodotgg/ngx-validators
+```
+
 ## Sample Usage
 ```ts
 import { Validators } from "@marcellodotgg/ngx-validators";

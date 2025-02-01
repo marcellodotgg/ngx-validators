@@ -25,10 +25,19 @@ class MyComponent {
 * `requiredIfAll(...controlNames: string[])`
 * `requiredIfAnyEqual(...controlPairs: [controlName, value][])`
 * `requiredIfAllEqual(...controlPairs: [controlName, value][])`
+* `inRange(start: number, end: number)`
 * `lt(controlName: string, opts = { includeFalsy: false })`
 * `lte(controlName: string, opts = { includeFalsy: false })`
 * `gt(controlName: string, opts = { includeFalsy: false })`
 * `gte(controlName: string, opts = { includeFalsy: false })`
+
+## Future Work
+* `profanity`
+* `zipCode`
+* `zipCodePlus4`
+* `stateCode(country = 'USA')`
+* `stateName(country = 'USA')`
+* `address`
 
 ## Contributing
 Pull Requests are welcome. We require passing tests and descriptions should be filled out. In addition, update any documentation if needed.

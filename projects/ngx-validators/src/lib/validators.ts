@@ -18,12 +18,34 @@ import {AbstractControl, ValidationErrors, ValidatorFn, Validators as CoreValida
  * ```
  */
 export class Validators extends CoreValidators {
+    /**
+     * The control is considered invalid if the given condition is met.
+     *
+     * @example
+     * const mustRespond = true;
+     *
+     * const form = new FormGroup({
+     *    field1: new FormControl('', Validators.requiredIf(mustRespond)),
+     * });
+     * @param condition the condition to determine if this is a required field or not.
+     */
     static requiredIf(condition: boolean): ValidatorFn {
         return (_: AbstractControl): ValidationErrors | null => {
             return condition ? { requiredIf: true, required: true } : null;
         }
     }
 
+    /**
+     * The control is considered invalid if any of the control names have a truthy value.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     field1: new FormControl('', Validators.requiredIfAll('field2', 'field3')),
+     *     field2: new FormControl(''),
+     *     field3: new FormControl('bar'),
+     * });
+     * @param controlNames the control names to search for a truthy value.
+     */
     static requiredIfAny(...controlNames: string[]): ValidatorFn {
        return (control: AbstractControl): ValidationErrors | null => {
            if (!control.parent) {
@@ -41,6 +63,17 @@ export class Validators extends CoreValidators {
        }
     }
 
+    /**
+     * The control is considered invalid if all the control names have a truthy value.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     field1: new FormControl('', Validators.requiredIfAll('field2', 'field3')),
+     *     field2: new FormControl('foo'),
+     *     field3: new FormControl('bar'),
+     * });
+     * @param controlNames the control names to search for a truthy value.
+     */
     static requiredIfAll(...controlNames: string[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.parent) {
@@ -57,6 +90,17 @@ export class Validators extends CoreValidators {
         }
     }
 
+    /**
+     * The control is considered invalid if any control pairs match.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     field1: new FormControl('', Validators.requiredIfAllEqual(['field2', 'foo'], ['field3', 'bar'])),
+     *     field2: new FormControl('foo'),
+     *     field3: new FormControl(''),
+     * });
+     * @param controlValuePairs a list of lists with 2 elements, `[controlName, controlValue]`
+     */
     static requiredIfAnyEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.parent) {
@@ -74,6 +118,17 @@ export class Validators extends CoreValidators {
         }
     }
 
+    /**
+     * The control is considered valid if any of the given control pairs do not match.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     field1: new FormControl('', Validators.requiredIfAllEqual(['field2', 'foo'], ['field3', 'bar'])),
+     *     field2: new FormControl('foo'),
+     *     field3: new FormControl('bar'),
+     * });
+     * @param controlValuePairs a list of lists with 2 elements, `[controlName, controlValue]`
+     */
     static requiredIfAllEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
              if (!control.parent) {
@@ -91,10 +146,18 @@ export class Validators extends CoreValidators {
     }
 
     /**
-     * The control is considered valid if it is within the given range.
+     * The control is considered valid if it is within the given range. Start is inclusive,
+     * end is exclusive. Represented as [start, end).
      *
+     * @example
+     * const form = new FormGroup({
+     *     age: new FormControl(67, Validators.inRange(18, 100))
+     * });
+     * @note value needs to be numeric, if it is a string, it will do it's best to perform a numeric
+     *       comparison. If unable to, then it will be considered in range. For example, `null` would
+     *       not return any errors.
      * @param start inclusive start
-     * @param end exclusive
+     * @param end exclusive end
      */
     static inRange(start: number, end: number): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {

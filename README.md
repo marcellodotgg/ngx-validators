@@ -9,6 +9,9 @@ While this is on NPM and available to install as a dependency, I encourage you t
 npm i @marcellodotgg/ngx-validators
 ```
 
+## Documentation
+You can read the documentation here: [DOCUMENTATION](./dist/docs/index.html)
+
 ## Sample Usage
 ```ts
 import { Validators } from "@marcellodotgg/ngx-validators";

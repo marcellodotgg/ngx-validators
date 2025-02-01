@@ -2,7 +2,12 @@
   "name": "@marcellodotgg/ngx-validators",
   "description": "A series of Angular Form Validators to help speed up common validation scenarios by extending the ones provided by the Angular team.",
   "keywords": [
-    "angular", "validator", "validations", "validate", "reactive-forms", "angular-forms"
+    "angular",
+    "validator",
+    "validations",
+    "validate",
+    "reactive-forms",
+    "angular-forms"
   ],
   "version": "0.0.0",
   "scripts": {
@@ -10,10 +15,12 @@
     "start": "ng serve",
     "build": "ng build",
     "build:pages": "ng build --output-path=dist --base-href='/ngx-validators/' --project demo",
-    "deploy": "npm run build:pages && npx angular-cli-ghpages --dir=dist/browser",
+    "build:docs": "npx typedoc --plugin typedoc-github-theme",
+    "deploy": "npm run build:pages && npx angular-cli-ghpages --dir=dist/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --coverage --project ngx-validators",
-    "test:watch": "ng test --watch --coverage --project ngx-validators"
+    "test:watch": "ng test --watch --coverage --project ngx-validators",
+    "docs:watch": "npx typedoc --plugin typedoc-github-theme --watch --preserveWatchOutput"
   },
   "license": "MIT",
   "private": false,
@@ -37,6 +44,7 @@
     "@nx/devkit": "^20.3.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "typedoc-github-theme": "^0.2.1",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
@@ -51,6 +59,7 @@
     "@vitest/coverage-v8": "^2.1.8",
     "jsdom": "^22.0.0",
     "ng-packagr": "^19.1.0",
+    "typedoc": "^0.27.6",
     "typescript": "~5.7.2",
     "vite": "^5.0.0",
     "vite-tsconfig-paths": "^4.2.0",

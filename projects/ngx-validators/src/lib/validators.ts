@@ -31,7 +31,9 @@ export class Validators extends CoreValidators {
                return null;
            }
 
-           const controlHasValue = (controlName: string) => control.parent.get(controlName)?.value;
+           revalidate(control, controlNames);
+
+           const controlHasValue = (controlName: string) => control.parent?.get(controlName)?.value;
            const isRequired = controlNames.some(controlHasValue)
 
            if (isRequired && control.value || !isRequired) return null;
@@ -46,7 +48,9 @@ export class Validators extends CoreValidators {
                return null;
            }
 
-            const isRequired = controlNames.every(controlName => control.parent.get(controlName)?.value);
+            revalidate(control, controlNames);
+
+            const isRequired = controlNames.every(controlName => control.parent?.get(controlName)?.value);
 
             if (isRequired && control.value || !isRequired) return null;
             return { requiredIfAll: controlNames, required: true };
@@ -60,7 +64,9 @@ export class Validators extends CoreValidators {
                 return null;
             }
 
-            const pairMatch = (pair: ControlValuePair) => control.parent.get(pair[0])?.value === pair[1];
+            revalidate(control, controlValuePairs.map(pair => pair[0]));
+
+            const pairMatch = (pair: ControlValuePair) => control.parent?.get(pair[0])?.value === pair[1];
             const isRequired = controlValuePairs.some(pairMatch);
 
             if (isRequired && control.value || !isRequired) return null;
@@ -75,11 +81,25 @@ export class Validators extends CoreValidators {
                 return null;
             }
 
-            const isRequired = controlValuePairs.every(pair => control.parent.get(pair[0])?.value === pair[1]);
+            revalidate(control, controlValuePairs.map(pair => pair[0]));
+
+            const isRequired = controlValuePairs.every(pair => control.parent?.get(pair[0])?.value === pair[1]);
 
             if (isRequired && control.value || !isRequired) return null;
             return { requiredIfAllEqual: true, required: true };
         }
+    }
+}
+
+function revalidate(control: any, controlNames: string[]): void {
+    if (!(control as any)['_revalidationSetup']) {
+        (control as any)['_revalidationSetup'] = true;
+        console.log('HELP')
+        controlNames.forEach((depControlName) => {
+            control.parent?.get(depControlName)?.valueChanges.subscribe(() => {
+                control.updateValueAndValidity({ emitEvent: false });
+            });
+        });
     }
 }
 

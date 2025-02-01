@@ -203,4 +203,44 @@ describe('Validators', () => {
             expect(form.get('firstName')?.errors).toBeNull();
         });
     })
+
+    describe('#inRange', () => {
+        it('should be valid when the control is null or undefined', () => {
+            const form = new FormGroup({
+                age: new FormControl<number | null | undefined>(null, Validators.inRange(18, 100))
+            });
+            expect(form.get('age')?.errors).toBeNull();
+
+            form.get('age')?.setValue(undefined);
+            expect(form.get('age')?.errors).toBeNull()
+        });
+
+        it('should be valid when the control is empty string', () => {
+            const form = new FormGroup({
+                age: new FormControl(null, Validators.inRange(18, 100))
+            });
+            expect(form.get('age')?.errors).toBeNull();
+        })
+
+        it('should have errors when the value is outside of the range', () => {
+            const form = new FormGroup({
+                age: new FormControl(100, Validators.inRange(18, 100))
+            });
+
+            expect(form.get('age')?.errors).toEqual({
+                outOfRange: true, range: [18, 100], value: 100
+            });
+
+            form.get('age')?.setValue(99);
+            expect(form.get('age')?.errors).toBeNull();
+
+            form.get('age')?.setValue(18);
+            expect(form.get('age')?.errors).toBeNull();
+
+            form.get('age')?.setValue(17);
+            expect(form.get('age')?.errors).toEqual({
+                outOfRange: true, range: [18, 100], value: 17
+            })
+        })
+    });
 });

@@ -89,6 +89,21 @@ export class Validators extends CoreValidators {
             return { requiredIfAllEqual: controlValuePairs, required: true };
         }
     }
+
+    /**
+     * The control is considered valid if it is within the given range.
+     *
+     * @param start inclusive start
+     * @param end exclusive
+     */
+    static inRange(start: number, end: number): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            if (Number.isNaN(control.value)) return null;
+           if (control.value === null || control.value === undefined || control.value === "") return null;
+           if (Number(control.value) >= start && Number(control.value) < end) return null;
+           return { outOfRange: true, range: [start, end], value: control.value };
+        }
+    }
 }
 
 function revalidate(control: any, controlNames: string[]): void {
@@ -103,4 +118,3 @@ function revalidate(control: any, controlNames: string[]): void {
 }
 
 type ControlValuePair = [controlName: string, value: any];
-

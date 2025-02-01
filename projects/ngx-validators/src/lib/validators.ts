@@ -24,51 +24,60 @@ export class Validators extends CoreValidators {
         }
     }
 
-    // Checks if any control has a truthy value
     static requiredIfAny(...controlNames: string[]): ValidatorFn {
        return (control: AbstractControl): ValidationErrors | null => {
-           if (!control.parent) return null;
+           if (!control.parent) {
+               setTimeout(() => { control.updateValueAndValidity() });
+               return null;
+           }
 
-           const controlHasValue = (controlName: string) => !!control.parent.get(controlName)?.value;
-           const isValid = controlNames.some(controlHasValue)
+           const controlHasValue = (controlName: string) => control.parent.get(controlName)?.value;
+           const isRequired = controlNames.some(controlHasValue)
 
-           if (isValid) return null;
+           if (isRequired && control.value || !isRequired) return null;
            return { requiredIfAny: controlNames.filter(controlHasValue), required: true };
        }
     }
 
-    // Checks if all controls have a truthy value
     static requiredIfAll(...controlNames: string[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-            if (!control.parent) return null;
+            if (!control.parent) {
+               setTimeout(() => { control.updateValueAndValidity() });
+               return null;
+           }
 
-            const isValid = controlNames.every(controlName => !!control.parent.get(controlName)?.value);
+            const isRequired = controlNames.every(controlName => control.parent.get(controlName)?.value);
 
-            if (isValid) return null;
+            if (isRequired && control.value || !isRequired) return null;
             return { requiredIfAll: controlNames, required: true };
         }
     }
 
     static requiredIfAnyEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-            if (!control.parent) return null;
+            if (!control.parent) {
+                setTimeout(() => { control.updateValueAndValidity() });
+                return null;
+            }
 
             const pairMatch = (pair: ControlValuePair) => control.parent.get(pair[0])?.value === pair[1];
-            const isValid = controlValuePairs.some(pairMatch);
+            const isRequired = controlValuePairs.some(pairMatch);
 
-            if (isValid) return null;
+            if (isRequired && control.value || !isRequired) return null;
             return { requiredIfAnyEqual: controlValuePairs.filter(pairMatch), required: true };
         }
     }
 
-
     static requiredIfAllEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-            if (!control.parent) return null;
+             if (!control.parent) {
+                setTimeout(() => { control.updateValueAndValidity() });
+                return null;
+            }
 
-            const isValid = controlValuePairs.every(pair => control.parent.get(pair[0])?.value === pair[1]);
+            const isRequired = controlValuePairs.every(pair => control.parent.get(pair[0])?.value === pair[1]);
 
-            if (isValid) return null;
+            if (isRequired && control.value || !isRequired) return null;
             return { requiredIfAllEqual: true, required: true };
         }
     }

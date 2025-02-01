@@ -10,7 +10,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:pages": "ng build --output-path=dist --base-href='/ngx-validators/' --project demo",
-    "deploy": "npm run build:pages && npx angular-cli-ghpages --dir=dist/browser --no-silent",
+    "deploy": "npm run build:pages && npx angular-cli-ghpages --dir=dist/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --coverage --project ngx-validators",
     "test:watch": "ng test --watch --coverage --project ngx-validators"

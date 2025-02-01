@@ -94,7 +94,6 @@ export class Validators extends CoreValidators {
 function revalidate(control: any, controlNames: string[]): void {
     if (!(control as any)['_revalidationSetup']) {
         (control as any)['_revalidationSetup'] = true;
-        console.log('HELP')
         controlNames.forEach((depControlName) => {
             control.parent?.get(depControlName)?.valueChanges.subscribe(() => {
                 control.updateValueAndValidity({ emitEvent: false });

@@ -1,0 +1,13 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-content: start;
+
+  label {
+    margin-top: 8px;
+  }
+
+  input[type=submit] {
+    margin-top: 16px;
+  }
+}

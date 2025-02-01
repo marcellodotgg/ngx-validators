@@ -1,0 +1,5 @@
+{
+  "out": "dist/docs",
+  "entryPoints": ["./projects/ngx-validators/src/public-api.ts"],
+  "exclude": ["**/node_modules/**", "*.spec.ts"]
+}

@@ -9,8 +9,9 @@ While this is on NPM and available to install as a dependency, I encourage you t
 npm i @marcellodotgg/ngx-validators
 ```
 
-## Documentation
-You can read the documentation here: [DOCUMENTATION](./dist/docs/index.html)
+## Documentation and Demo
+* You can read the documentation here: [DOCUMENTATION](https://marcellodotgg.github.io/ngx-validators/docs/)
+* You can view the demo form here: [DEMO](https://marcellodotgg.github.io/ngx-validators) 
 
 ## Sample Usage
 ```ts

@@ -16,7 +16,7 @@
     "build": "ng build",
     "build:pages": "ng build --output-path=dist --base-href='/ngx-validators/' --project demo",
     "build:docs": "npx typedoc --plugin typedoc-github-theme",
-    "deploy": "npm run build:pages && npx angular-cli-ghpages --dir=dist/",
+    "deploy": "npm run build:pages && npm run build:docs && npx angular-cli-ghpages --dir=dist/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --coverage --project ngx-validators",
     "test:watch": "ng test --watch --coverage --project ngx-validators",

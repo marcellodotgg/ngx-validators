@@ -14,7 +14,7 @@ import {stateNames} from "./postal/state-names";
  * ```ts
  * // Requires firstName, only if lastName is provided.
  * new FormGroup({
- *   firstName: new FormControl('', Validators.requiredIfAny('lastName'));
+ *   firstName: new FormControl('', Validators.any('lastName'));
  *   lastName: new FormControl('');
  * });
  * ```

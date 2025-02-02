@@ -34,6 +34,7 @@ class MyComponent {
 * `all(...controlNames: string[])`
 * `anyEqual(...controlPairs: [controlName, value][])`
 * `allEqual(...controlPairs: [controlName, value][])`
+* `equal(value: any)`
 * `range(start: number, end: number)`
 * `zipCode`
 * `stateCode`

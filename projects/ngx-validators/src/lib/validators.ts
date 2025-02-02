@@ -148,6 +148,25 @@ export class Validators extends CoreValidators {
     }
 
     /**
+     * The control is considered valid when the value of the control is equal to the value given.
+     * If the control has a falsy value, then this check will not occur.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     field1: new FormControl('1234', Validators.equal('1234')),
+     *     field2: new FormControl('', Validators.equal('1234')),
+     *     field3: new FormControl('123', Validators.equal('1234')),
+     * });
+     * @param value the value to check against
+     */
+    static equal(value: any): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            if (!control.value || control.value === value) return null;
+            return { notEqual: true, value: control.value, wanted: value };
+        }
+    }
+
+    /**
      * The control is considered valid if it is within the given range. Start is inclusive,
      * end is exclusive. Represented as [start, end).
      *

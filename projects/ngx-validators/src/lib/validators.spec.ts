@@ -341,4 +341,17 @@ describe('Validators', () => {
             expect(form.get('streetAddress')?.errors).toEqual({ streetAddress: true });
         });
     });
+
+    describe("#equal", () => {
+        it('should be valid as long as the value equals the given one', () => {
+            const form = new FormGroup({
+                field1: new FormControl('1234', Validators.equal('1234')),
+                field2: new FormControl('', Validators.equal('1234')),
+                field3: new FormControl('123', Validators.equal('1234')),
+            });
+            expect(form.get('field1')?.errors).toBeNull();
+            expect(form.get('field2')?.errors).toBeNull();
+            expect(form.get('field3')?.errors).toEqual({ notEqual: true, value: '123', wanted: '1234' });
+        })
+    });
 });

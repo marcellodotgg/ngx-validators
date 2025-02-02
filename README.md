@@ -29,7 +29,7 @@ class MyComponent {
 ```
 
 ## API
-* `if(condition: string)`
+* `if(condition: boolean)`
 * `any(...controlNames: string[])`
 * `all(...controlNames: string[])`
 * `anyEqual(...controlPairs: [controlName, value][])`
@@ -42,6 +42,7 @@ class MyComponent {
 * `streetAddress`
 
 ## Future Work
+* `unless(condition: boolean)`
 * `profanity`
 * `lt(controlName: string, opts = { includeFalsy: false })`
 * `lte(controlName: string, opts = { includeFalsy: false })`

@@ -50,7 +50,7 @@ class MyComponent {
 * `gte(controlName: string, opts = { includeFalsy: false })`
 * `json`
 * `in`
-* `notIn`
+* `out`
 * `base64`
 * `creditCard`
 * `number`

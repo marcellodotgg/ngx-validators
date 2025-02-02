@@ -1,4 +1,6 @@
 import {AbstractControl, ValidationErrors, ValidatorFn, Validators as CoreValidators} from '@angular/forms';
+import {stateCodes} from "./postal/state-codes";
+import {stateNames} from "./postal/state-names";
 
 /**
  * An extension of the default Angular Validators provided by the Angular team.
@@ -167,6 +169,74 @@ export class Validators extends CoreValidators {
            return { outOfRange: true, range: [start, end], value: control.value };
         }
     }
+
+    /**
+     * The control is considered a valid zip code if it is in the 5 digit or 5 plus 4 digit
+     * syntax. Therefore, if you prefer one over the other, you should pair this control
+     * with a length check.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     zip1: new FormControl('05434', Validators.zipCode),
+     *     zip2: new FormControl('43424-2343', Validators.zipCode),
+     * });
+     * @note this will allow both 5 digit zip codes or 5 plus 4.
+     * @param control
+     */
+     static zipCode(control: AbstractControl): ValidationErrors | null {
+            if (!control.value || control.value.match(/^\d{5}(-\d{4})?$/)) return null;
+            return { zipCode: true }
+     }
+
+    /**
+     * The control is considered a valid state code as long as it matches a state code in America.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     stateCode: new FormControl('CT', Validators.stateCode);
+     * });
+     * @note this is case-insensitive. Search time is constant.
+     * @param control
+     */
+     static stateCode(control: AbstractControl): ValidationErrors | null {
+        if (!control.value || stateCodes[control.value.toUpperCase()]) return null;
+        return { stateCode: true }
+     }
+
+    /**
+     * The control is considered a valid state name as long as it matches a state in America.
+     *
+     * @example
+     * const form = new FormGroup({
+     *     stateName: new FormControl('connecticut', Validators.stateName);
+     * });
+     * @note this is case-insensitive. Search time is constant.
+     * @param control
+     */
+     static stateName(control: AbstractControl): ValidationErrors | null {
+        if (!control.value || stateNames[control.value.toUpperCase()]) return null;
+        return { stateName: true }
+     }
+
+    /**
+     * The control is considered valid as long as it matches our criteria for an Address.
+     *
+     * @example
+     * // All Valid
+     * const form = new FormGroup({
+     *    streetAddress1: new FormControl('123 Main St', Validators.streetAddress),
+     *    streetAddress2: new FormControl('456 Elm Street Apt 5', Validators.streetAddress),
+     *    streetAddress3: new FormControl('789-B Oak Rd', Validators.streetAddress),
+     *    streetAddress4: new FormControl('101 First Ave, Unit #4', Validators.streetAddress),
+     * });
+     * // Invalid
+     * form.get('streetAddress1').setValue('Apartment ##123');
+     * @param control
+     */
+     static streetAddress(control: AbstractControl): ValidationErrors | null {
+        if (!control.value || control.value.match(/^\d+(-[A-Za-z0-9]+)?\s+[A-Za-z0-9\s.,#\-]+$/)) return null;
+        return { streetAddress: true };
+     }
 }
 
 function revalidate(control: any, controlNames: string[]): void {

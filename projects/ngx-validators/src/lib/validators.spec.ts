@@ -243,4 +243,102 @@ describe('Validators', () => {
             })
         })
     });
+
+    describe('#zipCode', () => {
+        it('should support 5 digit zip codes', () => {
+            const form = new FormGroup({
+                zipCode: new FormControl('93540'),
+            });
+            expect(form.get('zipCode')?.errors).toBeNull();
+        });
+
+        it('should support 5 plus 4 digit zip codes (extended zip codes)', () => {
+            const form = new FormGroup({
+                zipCode: new FormControl('06423-3471', Validators.zipCode),
+            });
+            expect(form.get('zipCode')?.errors).toBeNull();
+        });
+
+        it('should only check when there is a value', () => {
+            const form = new FormGroup({
+                zipCode: new FormControl('', Validators.zipCode),
+            })
+            expect(form.get('zipCode')?.errors).toBeNull();
+        })
+    });
+
+    describe('#stateCode', () => {
+        it('should support any state code, regardless of case', () => {
+            const form = new FormGroup({
+                stateCode: new FormControl('Ct', Validators.stateCode),
+            });
+            expect(form.get('stateCode')?.errors).toBeNull();
+        });
+
+        it('should be valid when there is nothing entered yet', () => {
+            const form = new FormGroup({
+                stateCode: new FormControl('', Validators.stateCode),
+            });
+            expect(form.get('stateCode')?.errors).toBeNull();
+        });
+
+        it('should have error when it is not a valid state code', () => {
+            const form = new FormGroup({
+                stateCode: new FormControl('AF', Validators.stateCode),
+            });
+            expect(form.get('stateCode')?.errors).toEqual({ stateCode: true });
+        });
+    });
+
+    describe('#stateName', () => {
+        it('should support any state name, regardless of case', () => {
+            const form = new FormGroup({
+                stateName: new FormControl('New YORK', Validators.stateName),
+            });
+            expect(form.get('stateName')?.errors).toBeNull();
+        });
+
+        it('should be valid when there is nothing entered yet', () => {
+            const form = new FormGroup({
+                stateName: new FormControl('', Validators.stateName),
+            });
+            expect(form.get('stateName')?.errors).toBeNull();
+        });
+
+        it('should have error when it is not a valid state name', () => {
+            const form = new FormGroup({
+                stateName: new FormControl('Orlando', Validators.stateName),
+            });
+            expect(form.get('stateName')?.errors).toEqual({ stateName: true });
+        });
+    });
+
+    describe('#address', () => {
+        it('should support any address', () => {
+            const form = new FormGroup({
+                streetAddress1: new FormControl('123 Main St', Validators.streetAddress),
+                streetAddress2: new FormControl('456 Elm Street Apt 5', Validators.streetAddress),
+                streetAddress3: new FormControl('789-B Oak Rd', Validators.streetAddress),
+                streetAddress4: new FormControl('101 First Ave, Unit #4', Validators.streetAddress),
+            });
+            expect(form.get('streetAddress1')?.errors).toBeNull();
+            expect(form.get('streetAddress2')?.errors).toBeNull();
+            expect(form.get('streetAddress3')?.errors).toBeNull();
+            expect(form.get('streetAddress4')?.errors).toBeNull();
+        });
+
+        it('should be valid when there is nothing entered yet', () => {
+            const form = new FormGroup({
+                streetAddress: new FormControl('', Validators.streetAddress),
+            });
+            expect(form.get('streetAddress')?.errors).toBeNull();
+        });
+
+        it('should have error when it is not address', () => {
+            const form = new FormGroup({
+                streetAddress: new FormControl('Apartment ##123', Validators.streetAddress),
+            });
+            expect(form.get('streetAddress')?.errors).toEqual({ streetAddress: true });
+        });
+    });
 });

@@ -22,8 +22,8 @@ class MyComponent {
   // start and end date is optional, unless you enter a start date or end date.
   form = new FormGroup({
     firstName: new FormControl("", Validators.required),
-    startDate: new FormControl("", Validators.requiredIfAny("endDate")),
-    endDate: new FormControl("", Validators.requiredIfAny("startDate")),
+    startDate: new FormControl("", Validators.any("endDate")),
+    endDate: new FormControl("", Validators.any("startDate")),
   });
 }
 ```
@@ -43,7 +43,6 @@ class MyComponent {
 
 ## Future Work
 * `unless(condition: boolean)`
-* `profanity`
 * `lt(controlName: string, opts = { includeFalsy: false })`
 * `lte(controlName: string, opts = { includeFalsy: false })`
 * `gt(controlName: string, opts = { includeFalsy: false })`

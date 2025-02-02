@@ -11,28 +11,28 @@ describe('Validators', () => {
         vi.clearAllTimers();
     });
 
-    describe('#requiredIf', () => {
+    describe('#if', () => {
         it('should have errors if the condition is true', () => {
             const form = new FormGroup({
-                firstName: new FormControl('aang', Validators.requiredIf(true))
+                firstName: new FormControl('aang', Validators.if(true))
             })
             expect(form.get('firstName')?.errors).toEqual({
-                requiredIf: true, required: true
+                if: true, required: true
             });
         });
 
        it('should not have errors if the condition is false', () => {
            const form = new FormGroup({
-               firstName: new FormControl('aang', Validators.requiredIf(false))
+               firstName: new FormControl('aang', Validators.if(false))
            })
            expect(form.get('firstName')?.errors).toBeNull();
        })
     });
 
-    describe("#requiredIfAny", () => {
+    describe("#any", () => {
         it('should be required if any of the controls have a truthy value', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAny('lastName', 'middleName')),
+                firstName: new FormControl('', Validators.any('lastName', 'middleName')),
                 lastName: new FormControl('last name'),
                 middleName: new FormControl(''),
             });
@@ -40,13 +40,13 @@ describe('Validators', () => {
             vi.advanceTimersByTime(1);
 
             expect(form.get('firstName')?.errors).toEqual({
-                requiredIfAny: ['lastName'], required: true,
+                any: ['lastName'], required: true,
             })
         });
 
         it('should be required if all of the controls have a truthy value', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAny('lastName', 'middleName')),
+                firstName: new FormControl('', Validators.any('lastName', 'middleName')),
                 lastName: new FormControl('last name'),
                 middleName: new FormControl('middle name'),
             });
@@ -54,13 +54,13 @@ describe('Validators', () => {
             vi.advanceTimersByTime(1);
 
             expect(form.get('firstName')?.errors).toEqual({
-                requiredIfAny: ['lastName', 'middleName'], required: true,
+                any: ['lastName', 'middleName'], required: true,
             })
         });
 
         it('should be valid if none of the controls have a value', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAny('lastName', 'middleName')),
+                firstName: new FormControl('', Validators.any('lastName', 'middleName')),
                 lastName: new FormControl(''),
                 middleName: new FormControl(''),
             });
@@ -72,7 +72,7 @@ describe('Validators', () => {
 
         it('should be valid if some control has a value and so does this one', () => {
             const form = new FormGroup({
-                firstName: new FormControl('larry', Validators.requiredIfAny('lastName', 'middleName')),
+                firstName: new FormControl('larry', Validators.any('lastName', 'middleName')),
                 lastName: new FormControl('smith'),
                 middleName: new FormControl(''),
             });
@@ -83,10 +83,10 @@ describe('Validators', () => {
         });
     })
 
-    describe("#requiredIfAll", () => {
+    describe("#all", () => {
         it('should be required when all the controls have a truthy value', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAll('lastName', 'middleName')),
+                firstName: new FormControl('', Validators.all('lastName', 'middleName')),
                 lastName: new FormControl('smith'),
                 middleName: new FormControl('allen'),
             });
@@ -94,13 +94,13 @@ describe('Validators', () => {
             vi.advanceTimersByTime(1);
 
             expect(form.get('firstName')?.errors).toEqual({
-                requiredIfAll: ['lastName', 'middleName'], required: true
+                all: ['lastName', 'middleName'], required: true
             })
         });
 
         it('should be valid when any the controls have a falsy value', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAll('lastName', 'middleName')),
+                firstName: new FormControl('', Validators.all('lastName', 'middleName')),
                 lastName: new FormControl('smith'),
                 middleName: new FormControl(''),
             });
@@ -112,7 +112,7 @@ describe('Validators', () => {
 
         it('should be valid when none the controls have a truthy value', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAll('lastName', 'middleName')),
+                firstName: new FormControl('', Validators.all('lastName', 'middleName')),
                 lastName: new FormControl(''),
                 middleName: new FormControl(''),
             });
@@ -123,10 +123,10 @@ describe('Validators', () => {
         });
     });
 
-    describe("#requiredIfAnyEqual", () => {
+    describe("#anyEqual", () => {
         it('should be required if any of the controls match the value given', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAnyEqual(['lastName', 'bar'], ['middleName', 'baz'])),
+                firstName: new FormControl('', Validators.anyEqual(['lastName', 'bar'], ['middleName', 'baz'])),
                 middleName: new FormControl(''),
                 lastName: new FormControl('bar'),
             });
@@ -134,13 +134,13 @@ describe('Validators', () => {
             vi.advanceTimersByTime(1);
 
             expect(form.get('firstName')?.errors).toEqual({
-                requiredIfAnyEqual: [['lastName', 'bar']], required: true
+                anyEqual: [['lastName', 'bar']], required: true
             })
         });
 
         it('should not be required if a control matches a value, but you data is entered', () => {
             const form = new FormGroup({
-                firstName: new FormControl('foo', Validators.requiredIfAnyEqual(['lastName', 'bar'], ['middleName', 'baz'])),
+                firstName: new FormControl('foo', Validators.anyEqual(['lastName', 'bar'], ['middleName', 'baz'])),
                 middleName: new FormControl(''),
                 lastName: new FormControl('bar'),
             });
@@ -152,7 +152,7 @@ describe('Validators', () => {
 
         it('should not be required if a control does not match the value given', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAnyEqual(['lastName', 'baz'], ['middleName', 'baz'])),
+                firstName: new FormControl('', Validators.anyEqual(['lastName', 'baz'], ['middleName', 'baz'])),
                 middleName: new FormControl(''),
                 lastName: new FormControl('bar'),
             })
@@ -163,10 +163,10 @@ describe('Validators', () => {
         })
     })
 
-    describe("#requiredIfAllEqual", () => {
+    describe("#allEqual", () => {
         it('should be required only if all of the values match', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAllEqual(['lastName', 'baz'], ['middleName', 'bar'])),
+                firstName: new FormControl('', Validators.allEqual(['lastName', 'baz'], ['middleName', 'bar'])),
                 middleName: new FormControl('bar'),
                 lastName: new FormControl('baz'),
             })
@@ -174,14 +174,14 @@ describe('Validators', () => {
             vi.advanceTimersByTime(1);
 
             expect(form.get('firstName')?.errors).toEqual({
-                requiredIfAllEqual: [['lastName', 'baz'], ['middleName', 'bar']],
+                allEqual: [['lastName', 'baz'], ['middleName', 'bar']],
                 required: true
             });
         });
 
         it('should not be required if some values do not match', () => {
             const form = new FormGroup({
-                firstName: new FormControl('', Validators.requiredIfAllEqual(['lastName', 'bar'], ['middleName', 'baz'])),
+                firstName: new FormControl('', Validators.allEqual(['lastName', 'bar'], ['middleName', 'baz'])),
                 middleName: new FormControl('foo'),
                 lastName: new FormControl('bar'),
             })
@@ -193,7 +193,7 @@ describe('Validators', () => {
 
         it('should not be required if all of the values match, but a value is provided', () => {
             const form = new FormGroup({
-                firstName: new FormControl('foo', Validators.requiredIfAllEqual(['lastName', 'baz'], ['middleName', 'bar'])),
+                firstName: new FormControl('foo', Validators.allEqual(['lastName', 'baz'], ['middleName', 'bar'])),
                 middleName: new FormControl('bar'),
                 lastName: new FormControl('baz'),
             })
@@ -204,10 +204,10 @@ describe('Validators', () => {
         });
     })
 
-    describe('#inRange', () => {
+    describe('#range', () => {
         it('should be valid when the control is null or undefined', () => {
             const form = new FormGroup({
-                age: new FormControl<number | null | undefined>(null, Validators.inRange(18, 100))
+                age: new FormControl<number | null | undefined>(null, Validators.range(18, 100))
             });
             expect(form.get('age')?.errors).toBeNull();
 
@@ -217,14 +217,14 @@ describe('Validators', () => {
 
         it('should be valid when the control is empty string', () => {
             const form = new FormGroup({
-                age: new FormControl(null, Validators.inRange(18, 100))
+                age: new FormControl(null, Validators.range(18, 100))
             });
             expect(form.get('age')?.errors).toBeNull();
         })
 
         it('should have errors when the value is outside of the range', () => {
             const form = new FormGroup({
-                age: new FormControl(100, Validators.inRange(18, 100))
+                age: new FormControl(100, Validators.range(18, 100))
             });
 
             expect(form.get('age')?.errors).toEqual({

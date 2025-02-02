@@ -27,13 +27,13 @@ export class Validators extends CoreValidators {
      * const mustRespond = true;
      *
      * const form = new FormGroup({
-     *    field1: new FormControl('', Validators.requiredIf(mustRespond)),
+     *    field1: new FormControl('', Validators.if(mustRespond)),
      * });
      * @param condition the condition to determine if this is a required field or not.
      */
-    static requiredIf(condition: boolean): ValidatorFn {
+    static if(condition: boolean): ValidatorFn {
         return (_: AbstractControl): ValidationErrors | null => {
-            return condition ? { requiredIf: true, required: true } : null;
+            return condition ? { if: true, required: true } : null;
         }
     }
 
@@ -42,13 +42,13 @@ export class Validators extends CoreValidators {
      *
      * @example
      * const form = new FormGroup({
-     *     field1: new FormControl('', Validators.requiredIfAll('field2', 'field3')),
+     *     field1: new FormControl('', Validators.any('field2', 'field3')),
      *     field2: new FormControl(''),
      *     field3: new FormControl('bar'),
      * });
      * @param controlNames the control names to search for a truthy value.
      */
-    static requiredIfAny(...controlNames: string[]): ValidatorFn {
+    static any(...controlNames: string[]): ValidatorFn {
        return (control: AbstractControl): ValidationErrors | null => {
            if (!control.parent) {
                setTimeout(() => { control.updateValueAndValidity() });
@@ -61,7 +61,7 @@ export class Validators extends CoreValidators {
            const isRequired = controlNames.some(controlHasValue)
 
            if (isRequired && control.value || !isRequired) return null;
-           return { requiredIfAny: controlNames.filter(controlHasValue), required: true };
+           return { any: controlNames.filter(controlHasValue), required: true };
        }
     }
 
@@ -70,13 +70,13 @@ export class Validators extends CoreValidators {
      *
      * @example
      * const form = new FormGroup({
-     *     field1: new FormControl('', Validators.requiredIfAll('field2', 'field3')),
+     *     field1: new FormControl('', Validators.all('field2', 'field3')),
      *     field2: new FormControl('foo'),
      *     field3: new FormControl('bar'),
      * });
      * @param controlNames the control names to search for a truthy value.
      */
-    static requiredIfAll(...controlNames: string[]): ValidatorFn {
+    static all(...controlNames: string[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.parent) {
                setTimeout(() => { control.updateValueAndValidity() });
@@ -88,7 +88,7 @@ export class Validators extends CoreValidators {
             const isRequired = controlNames.every(controlName => control.parent?.get(controlName)?.value);
 
             if (isRequired && control.value || !isRequired) return null;
-            return { requiredIfAll: controlNames, required: true };
+            return { all: controlNames, required: true };
         }
     }
 
@@ -97,13 +97,13 @@ export class Validators extends CoreValidators {
      *
      * @example
      * const form = new FormGroup({
-     *     field1: new FormControl('', Validators.requiredIfAllEqual(['field2', 'foo'], ['field3', 'bar'])),
+     *     field1: new FormControl('', Validators.anyEqual(['field2', 'foo'], ['field3', 'bar'])),
      *     field2: new FormControl('foo'),
      *     field3: new FormControl(''),
      * });
      * @param controlValuePairs a list of lists with 2 elements, `[controlName, controlValue]`
      */
-    static requiredIfAnyEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
+    static anyEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (!control.parent) {
                 setTimeout(() => { control.updateValueAndValidity() });
@@ -116,7 +116,7 @@ export class Validators extends CoreValidators {
             const isRequired = controlValuePairs.some(pairMatch);
 
             if (isRequired && control.value || !isRequired) return null;
-            return { requiredIfAnyEqual: controlValuePairs.filter(pairMatch), required: true };
+            return { anyEqual: controlValuePairs.filter(pairMatch), required: true };
         }
     }
 
@@ -125,13 +125,13 @@ export class Validators extends CoreValidators {
      *
      * @example
      * const form = new FormGroup({
-     *     field1: new FormControl('', Validators.requiredIfAllEqual(['field2', 'foo'], ['field3', 'bar'])),
+     *     field1: new FormControl('', Validators.allEqual(['field2', 'foo'], ['field3', 'bar'])),
      *     field2: new FormControl('foo'),
      *     field3: new FormControl('bar'),
      * });
      * @param controlValuePairs a list of lists with 2 elements, `[controlName, controlValue]`
      */
-    static requiredIfAllEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
+    static allEqual(...controlValuePairs: ControlValuePair[]): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
              if (!control.parent) {
                 setTimeout(() => { control.updateValueAndValidity() });
@@ -143,7 +143,7 @@ export class Validators extends CoreValidators {
             const isRequired = controlValuePairs.every(pair => control.parent?.get(pair[0])?.value === pair[1]);
 
             if (isRequired && control.value || !isRequired) return null;
-            return { requiredIfAllEqual: controlValuePairs, required: true };
+            return { allEqual: controlValuePairs, required: true };
         }
     }
 
@@ -153,7 +153,7 @@ export class Validators extends CoreValidators {
      *
      * @example
      * const form = new FormGroup({
-     *     age: new FormControl(67, Validators.inRange(18, 100))
+     *     age: new FormControl(67, Validators.range(18, 100))
      * });
      * @note value needs to be numeric, if it is a string, it will do it's best to perform a numeric
      *       comparison. If unable to, then it will be considered in range. For example, `null` would
@@ -161,7 +161,7 @@ export class Validators extends CoreValidators {
      * @param start inclusive start
      * @param end exclusive end
      */
-    static inRange(start: number, end: number): ValidatorFn {
+    static range(start: number, end: number): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             if (Number.isNaN(control.value)) return null;
            if (control.value === null || control.value === undefined || control.value === "") return null;

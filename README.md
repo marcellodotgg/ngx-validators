@@ -29,12 +29,12 @@ class MyComponent {
 ```
 
 ## API
-* `requiredIf(condition: string)`
-* `requiredIfAny(...controlNames: string[])`
-* `requiredIfAll(...controlNames: string[])`
-* `requiredIfAnyEqual(...controlPairs: [controlName, value][])`
-* `requiredIfAllEqual(...controlPairs: [controlName, value][])`
-* `inRange(start: number, end: number)`
+* `if(condition: string)`
+* `any(...controlNames: string[])`
+* `all(...controlNames: string[])`
+* `anyEqual(...controlPairs: [controlName, value][])`
+* `allEqual(...controlPairs: [controlName, value][])`
+* `range(start: number, end: number)`
 * `zipCode`
 * `stateCode`
 * `stateName`
@@ -46,6 +46,14 @@ class MyComponent {
 * `lte(controlName: string, opts = { includeFalsy: false })`
 * `gt(controlName: string, opts = { includeFalsy: false })`
 * `gte(controlName: string, opts = { includeFalsy: false })`
+* `json`
+* `in`
+* `notIn`
+* `base64`
+* `creditCard`
+* `number`
+* `NaN`
+* `url`
 
 ## Contributing
 Pull Requests are welcome. We require passing tests and descriptions should be filled out. In addition, update any documentation if needed.

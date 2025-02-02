@@ -15,8 +15,8 @@ export class AppComponent {
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
     canProvideEmail: new FormControl(''),
-    email: new FormControl('', [Validators.email, Validators.requiredIfAllEqual(['canProvideEmail', true])]),
+    email: new FormControl('', [Validators.email, Validators.allEqual(['canProvideEmail', true])]),
     gender: new FormControl('', Validators.required),
-    genderOther: new FormControl('', Validators.requiredIfAllEqual(['gender', 'other'])),
+    genderOther: new FormControl('', Validators.allEqual(['gender', 'other'])),
   })
 }
